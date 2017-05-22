@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import AddSong from '../components/AddSong';
-import store from '../store';
 import {loadAllSongs, addSongToPlaylist} from '../action-creators/playlists';
 
 const mapStateToProps = (state, ownProps) => {
