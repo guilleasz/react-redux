@@ -1,7 +1,12 @@
 import React from 'react';
 import NewPlaylist from '../components/NewPlaylist';
-import store from '../store';
+import {connect} from 'react-redux';
 import {addNewPlaylist} from '../action-creators/playlists';
+
+
+const mapStateToProps = () => ({});
+const mapDispatchToProps = dispatch => ({ addNewPlaylist: name => dispatch(addNewPlaylist(name)) });
+
 
 class NewPlaylistContainer extends React.Component {
 
@@ -26,7 +31,7 @@ class NewPlaylistContainer extends React.Component {
   handleSubmit(evt) {
 
     evt.preventDefault();
-    store.dispatch(addNewPlaylist(this.state.inputValue));
+    this.props.addNewPlaylist(this.state.inputValue);
   }
 
   render() {
@@ -50,4 +55,4 @@ class NewPlaylistContainer extends React.Component {
 
 }
 
-export default NewPlaylistContainer;
+export default connect(mapStateToProps, mapDispatchToProps)(NewPlaylistContainer);

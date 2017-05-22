@@ -48,4 +48,4 @@ class FilterableArtistsContainer extends React.Component {
   }
 }
 
-export default  connect(mapStateToProps)(FilterableArtistsContainer);
+export default connect(mapStateToProps)(FilterableArtistsContainer);
