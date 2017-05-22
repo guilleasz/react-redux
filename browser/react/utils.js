@@ -17,7 +17,7 @@ export const convertAlbums = (albums) =>
 const mod = (num, m) => ((num % m) + m) % m;
 
 export const convertSongsToStations = (songsArr) => {
-  return _groupBy(songsArr.map(convertSong), (song) => song.genre);
+  return _groupBy(songsArr, (song) => song.genre);
 };
 
 export const skip = (interval, {currentSongList, currentSong}) => {
