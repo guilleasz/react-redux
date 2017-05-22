@@ -42,7 +42,7 @@ class FilterableArtistsContainer extends React.Component {
           handleChange={this.handleChange}
           inputValue={inputValue}
         />
-        <Artists artists={filteredArtists}/>
+        <Artists artists={filteredArtists} />
       </div>
     );
   }
