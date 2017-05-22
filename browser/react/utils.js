@@ -1,3 +1,5 @@
+import {groupBy as _groupBy} from 'underscore';
+
 export const convertSong = (song) => {
   song.audioUrl = `/api/songs/${song.id}/audio`;
   return song;
@@ -13,6 +15,10 @@ export const convertAlbums = (albums) =>
   albums.map(album => convertAlbum(album));
 
 const mod = (num, m) => ((num % m) + m) % m;
+
+export const convertSongsToStations = (songsArr) => {
+  return _groupBy(songsArr.map(convertSong), (song) => song.genre);
+};
 
 export const skip = (interval, {currentSongList, currentSong}) => {
   let idx = currentSongList.map(song => song.id).indexOf(currentSong.id);
