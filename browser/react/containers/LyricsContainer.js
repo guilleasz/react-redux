@@ -1,30 +1,33 @@
 import React, {Component} from 'react';
-import store from '../store';
-import Lyrics from '../components/Lyrics';
+import { connect } from 'react-redux';
 
+import Lyrics from '../components/Lyrics';
 import {searchLyrics} from '../action-creators/lyrics';
+
+
+const mapStateToProps = (state, ownProps) => {
+  return Object.assign({}, ownProps, {
+    lyrics: state.lyrics
+  });
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  searchLyrics: (artistQuery, songQuery) => dispatch(searchLyrics(artistQuery, songQuery)),
+});
+
 
 class LyricsContainer extends Component {
 
   constructor() {
-
     super();
-
-    this.state = Object.assign({
+    this.state = {
       artistQuery: '',
       songQuery: ''
-    }, store.getState());
+    };
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleArtistInput = this.handleArtistInput.bind(this);
     this.handleSongInput = this.handleSongInput.bind(this);
-
-  }
-
-  componentDidMount() {
-    this.unsubscribe = store.subscribe(() => {
-      this.setState(store.getState());
-    });
   }
 
   handleArtistInput(artist) {
@@ -35,22 +38,19 @@ class LyricsContainer extends Component {
     this.setState({ songQuery: song });
   }
 
-  handleSubmit(e) {
+
+handleSubmit(e) {
     e.preventDefault();
     if (this.state.artistQuery && this.state.songQuery) {
-      store.dispatch(searchLyrics(this.state.artistQuery, this.state.songQuery));
+      this.props.searchLyrics(this.state.artistQuery, this.state.songQuery);
     }
-  }
-
-  componentWillUnmount() {
-    this.unsubscribe();
   }
 
   render() {
     return (
       <Lyrics
         {...this.state}
-        handleChange={this.handleChange}
+        lyrics={this.props.lyrics}
         setArtist={this.handleArtistInput}
         setSong={this.handleSongInput}
         handleSubmit={this.handleSubmit} />
@@ -59,5 +59,4 @@ class LyricsContainer extends Component {
 
 }
 
-export default LyricsContainer;
-
+export default connect(mapStateToProps, mapDispatchToProps)(LyricsContainer);
